@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { NextConfig } from "next";
 import { withSentryConfig } from "@sentry/nextjs";
 
