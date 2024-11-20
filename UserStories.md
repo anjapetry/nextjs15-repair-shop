@@ -12,7 +12,7 @@
 10. [x] Tickets have an ID, title, notes, created & updated dates
 11. [x] Tickets are either OPEN or COMPLETED
 12. [x] Tickets are assigned to specific employees
-13. [ ] Users can have Employee, Manager, or Admin permissions
+13. [x] Users can have Employee, Manager, or Admin permissions
 14. [ ] All users can create and view tickets
 15. [ ] All users can create, edit and view customers
 16. [ ] Employees can only edit their assigned tickets
