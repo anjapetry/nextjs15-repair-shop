@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import  { InputWithLabel } from "@/components/inputs/InputWithLabel";
+import { InputWithLabel } from "@/components/inputs/InputWithLabel";
 
 import {
   insertCustomerSchema,
@@ -53,7 +53,72 @@ export default function CustomerForm({ customer }: Props) {
           onSubmit={form.handleSubmit(submitForm)} // called by react-hook-form
           className="flex flex-col gap-4 md:flex-row md:gap-8"
         >
-          <p>{JSON.stringify(form.getValues())}</p>
+          <div className="flex w-full max-w-xs flex-col gap-4 pt-2">
+            <InputWithLabel<insertCustomerSchemaType>
+              fieldTitle="First Name"
+              nameInSchema="firstName"
+            />
+            <InputWithLabel<insertCustomerSchemaType>
+              fieldTitle="Last Name"
+              nameInSchema="lastName"
+            />
+            <InputWithLabel<insertCustomerSchemaType>
+              fieldTitle="Address 1"
+              nameInSchema="address1"
+            />
+            <InputWithLabel<insertCustomerSchemaType>
+              fieldTitle="Address 2"
+              nameInSchema="address2"
+            />
+            <InputWithLabel<insertCustomerSchemaType>
+              fieldTitle="City"
+              nameInSchema="city"
+            />
+            <InputWithLabel<insertCustomerSchemaType>
+              fieldTitle="State"
+              nameInSchema="state"
+            />
+          </div>
+
+          <div className="flex w-full max-w-xs flex-col gap-4 pt-2">
+            <InputWithLabel<insertCustomerSchemaType>
+              fieldTitle="Zip Code"
+              nameInSchema="zip"
+            />
+            <InputWithLabel<insertCustomerSchemaType>
+              fieldTitle="Email"
+              nameInSchema="email"
+            />
+            <InputWithLabel<insertCustomerSchemaType>
+              fieldTitle="Phone"
+              nameInSchema="phone"
+            />
+
+            <div className="flex gap-2">
+              <Button
+                tabIndex={-1}
+                type="submit"
+                className="w-3/4 font-semibold"
+                variant="default"
+                title="Save"
+                aria-label="Save"
+              >
+                Save
+              </Button>
+
+              <Button
+                tabIndex={-1}
+                type="button"
+                className="font-semibold"
+                variant="destructive"
+                title="Reset"
+                aria-label="Reset"
+                onClick={() => form.reset(defaultValues)}
+              >
+                Reset
+              </Button>
+            </div>
+          </div>
         </form>
       </Form>
     </div>
