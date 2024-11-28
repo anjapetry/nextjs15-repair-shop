@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { InputWithLabel } from "@/components/inputs/InputWithLabel";
+import { TextAreaWithLabel } from "@/components/inputs/TextAreaWithLabel";
 
 import {
   insertCustomerSchema,
@@ -92,6 +93,12 @@ export default function CustomerForm({ customer }: Props) {
             <InputWithLabel<insertCustomerSchemaType>
               fieldTitle="Phone"
               nameInSchema="phone"
+            />
+
+            <TextAreaWithLabel<insertCustomerSchemaType>
+              fieldTitle="Notes"
+              nameInSchema="notes"
+              className="h-40"
             />
 
             <div className="flex gap-2">
