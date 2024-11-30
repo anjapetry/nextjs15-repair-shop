@@ -2,10 +2,15 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
+
 import { InputWithLabel } from "@/components/inputs/InputWithLabel";
+import { SelectWithLabel } from "@/components/inputs/SelectWithLabel";
 import { TextAreaWithLabel } from "@/components/inputs/TextAreaWithLabel";
+
+import { StatesArray } from "@/constants/StateArray";
 
 import {
   insertCustomerSchema,
@@ -99,6 +104,12 @@ export default function CustomerForm({ customer }: Props) {
               fieldTitle="Notes"
               nameInSchema="notes"
               className="h-40"
+            />
+
+            <SelectWithLabel<insertCustomerSchemaType>
+              fieldTitle="State"
+              nameInSchema="state"
+              data={StatesArray}
             />
 
             <div className="flex gap-2">
