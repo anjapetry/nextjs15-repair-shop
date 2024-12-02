@@ -40,6 +40,7 @@ export function CheckboxWithLabel<S>({
               <Checkbox
                 id={nameInSchema}
                 {...field}
+                checked={field.value}
                 onCheckedChange={field.onChange}
               />
             </FormControl>
