@@ -69,18 +69,37 @@ export default function TicketForm({
             <InputWithLabel<insertTicketSchemaType>
               fieldTitle="Title"
               nameInSchema="title"
-            />
-            <InputWithLabel<insertTicketSchemaType>
-              fieldTitle="Tech"
-              nameInSchema="tech"
-              disabled={true}
+              disabled={!isEditable}
             />
 
-            <CheckboxWithLabel<insertTicketSchemaType>
-              fieldTitle="Completed"
-              nameInSchema="completed"
-              message="Yes"
-            />
+            {isManager ? (
+              <SelectWithLabel<insertTicketSchemaType>
+                fieldTitle="Tech ID"
+                nameInSchema="tech"
+                data={[
+                  {
+                    id: "new-ticket@example.com",
+                    description: "new-ticket@example.com",
+                  },
+                  ...techs,
+                ]}
+              />
+            ) : (
+              <InputWithLabel<insertTicketSchemaType>
+                fieldTitle="Tech"
+                nameInSchema="tech"
+                disabled={true}
+              />
+            )}
+
+            {ticket?.id ? (
+              <CheckboxWithLabel<insertTicketSchemaType>
+                fieldTitle="Completed"
+                nameInSchema="completed"
+                message="Yes"
+                disabled={!isEditable}
+              />
+            ) : null}
 
             <div className="m-4 space-y-2">
               <h3 className="text-lg">Customer Info</h3>
