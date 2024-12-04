@@ -91,10 +91,22 @@ export default async function TicketFormPage({
       const customer = await getCustomer(ticket.customerId);
 
       // return ticket form
-      console.log("ticket: ", ticket);
-      console.log("customer: ", customer);
-      return <TicketForm customer={customer} ticket={ticket} />;
+      // console.log("ticket: ", ticket);
+      // console.log("customer: ", customer);
+      if (isManager) {
+        kindeInit(); // initializes Kinde Managenment API client (we set init as kindeInit in import)
+        const { users } = await Users.getUsers();
+
+        const techs = users
+          ? users.map((user) => ({ id: user.email!, description: user.email! }))
+          : [];
+        return <TicketForm customer={customer} ticket={ticket} techs={techs} />;
+      } else {
+        const isEditable = user.email === ticket.tech;
+        return <TicketForm customer={customer} ticket={ticket} isEditable={isEditable} />;
+      }
     }
+
   } catch (e) {
     if (e instanceof Error) {
       Sentry.captureException(e);
