@@ -114,7 +114,7 @@ export default function CustomerForm({ customer }: Props) {
             <TextAreaWithLabel<insertCustomerSchemaType>
               fieldTitle="Notes"
               nameInSchema="notes"
-              className="h-40"
+              className="mb-6 h-40"
             />
 
             {isLoading ? (

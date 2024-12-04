@@ -20,7 +20,10 @@ import { selectCustomerSchemaType } from "@/zod-schemas/customer";
 type Props = {
   customer: selectCustomerSchemaType;
   ticket?: selectTicketSchemaType;
-  techs?: { id: string; description: string }[];
+  techs?: {
+    id: string;
+    description: string;
+  }[];
   isEditable?: boolean;
 };
 
@@ -55,7 +58,11 @@ export default function TicketForm({
     <div className="flex flex-col gap-1 sm:px-8">
       <div>
         <h2 className="text-2xl font-bold">
-          {ticket?.id ? `Edit Ticket # ${ticket.id}` : "New Ticket Form"}
+          {ticket?.id && isEditable
+            ? `Edit Ticket # ${ticket.id}`
+            : ticket?.id
+              ? `View Ticket # ${ticket.id}`
+              : "New Ticket Form"}
         </h2>
       </div>
       <Form {...form}>
@@ -63,9 +70,7 @@ export default function TicketForm({
           onSubmit={form.handleSubmit(submitForm)}
           className="flex flex-col gap-4 md:flex-row md:gap-8"
         >
-          {/* //delete before creating actual form
-          <p>{JSON.stringify(form.getValues())}</p> */}
-          <div className="flex w-full max-w-xs flex-col gap-4 pt-2">
+          <div className="flex w-full max-w-xs flex-col gap-4">
             <InputWithLabel<insertTicketSchemaType>
               fieldTitle="Title"
               nameInSchema="title"
@@ -101,7 +106,7 @@ export default function TicketForm({
               />
             ) : null}
 
-            <div className="m-4 space-y-2">
+            <div className="mt-4 space-y-2">
               <h3 className="text-lg">Customer Info</h3>
               <hr className="w-4/5" />
               <p>
@@ -122,28 +127,31 @@ export default function TicketForm({
             <TextAreaWithLabel<insertTicketSchemaType>
               fieldTitle="Description"
               nameInSchema="description"
-              className="h-96"
+              className="mb-6 h-80"
+              disabled={!isEditable}
             />
 
-            <div className="flex gap-2">
-              <Button
-                type="submit"
-                className="w-3/4"
-                variant="default"
-                title="Save"
-              >
-                Save
-              </Button>
+            {isEditable ? (
+              <div className="flex gap-2">
+                <Button
+                  type="submit"
+                  className="w-3/4"
+                  variant="default"
+                  title="Save"
+                >
+                  Save
+                </Button>
 
-              <Button
-                type="button"
-                variant="destructive"
-                title="Reset"
-                onClick={() => form.reset(defaultValues)}
-              >
-                Reset
-              </Button>
-            </div>
+                <Button
+                  type="button"
+                  variant="destructive"
+                  title="Reset"
+                  onClick={() => form.reset(defaultValues)}
+                >
+                  Reset
+                </Button>
+              </div>
+            ) : null}
           </div>
         </form>
       </Form>
