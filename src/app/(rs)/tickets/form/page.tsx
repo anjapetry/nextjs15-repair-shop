@@ -4,6 +4,10 @@ import { BackButton } from "@/components/BackButton";
 import * as Sentry from "@sentry/nextjs";
 import TicketForm from "@/app/(rs)/tickets/form/TicketForm";
 
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+
+import { Users, init as kindeInit } from "@kinde/management-api-js";
+
 export default async function TicketFormPage({
   searchParams,
 }: {
@@ -22,6 +26,14 @@ export default async function TicketFormPage({
         </>
       );
     }
+
+    const { getPermission, getUser } = getKindeServerSession();
+    const [managerPermission, user] = await Promise.all([
+      getPermission("manager"),
+      getUser(),
+    ]);
+
+    const isManager = managerPermission?.isGranted;
 
     // New ticket form
     if (customerId) {
@@ -50,8 +62,17 @@ export default async function TicketFormPage({
       }
 
       // return ticket form
-      console.log(customer);
-      return <TicketForm customer={customer} />;
+      if (isManager) {
+        kindeInit(); // initializes Kinde Managenment API client (we set init as kindeInit in import)
+        const { users } = await Users.getUsers();
+
+        const techs = users
+          ? users.map((user) => ({ id: user.email!, description: user.email! }))
+          : [];
+        return <TicketForm customer={customer} techs={techs} />;
+      } else {
+        return <TicketForm customer={customer} />;
+      }
     }
 
     // Edit ticket form
