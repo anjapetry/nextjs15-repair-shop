@@ -40,11 +40,11 @@ export function InputWithLabel<S>({
           <FormControl>
             <Input
               id={nameInSchema}
-              className={`w-full max-w-xs disabled:text-blue-500 disabled:opacity-75 dark:disabled:text-green-500 ${className}`}
+              className={`w-full max-w-xs disabled:text-stone-600 disabled:opacity-75 dark:disabled:text-stone-300 ${className}`}
               {...props}
               {...field}
             />
-          </FormControl>
+          </FormControl
           <FormMessage />
         </FormItem>
       )}
