@@ -44,7 +44,7 @@ export function InputWithLabel<S>({
               {...props}
               {...field}
             />
-          </FormControl
+          </FormControl>
           <FormMessage />
         </FormItem>
       )}
