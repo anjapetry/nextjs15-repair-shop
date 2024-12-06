@@ -8,6 +8,28 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 import { Users, init as kindeInit } from "@kinde/management-api-js";
 
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
+  const { customerId, ticketId } = await searchParams;
+
+  if (!customerId && !ticketId)
+    return {
+      title: "Missing Ticket ID or Customer ID",
+    };
+
+  if (customerId)
+    return {
+      title: `New Ticket for Customer #${customerId}`,
+    };
+
+  if (ticketId)
+    return {
+      title: `Edit Ticket #${ticketId}`,
+    };
+}
 export default async function TicketFormPage({
   searchParams,
 }: {
@@ -102,11 +124,17 @@ export default async function TicketFormPage({
           : [];
         return <TicketForm customer={customer} ticket={ticket} techs={techs} />;
       } else {
-        const isEditable = user.email === ticket.tech;
-        return <TicketForm customer={customer} ticket={ticket} isEditable={isEditable} />;
+        const isEditable =
+          user.email?.toLowerCase() === ticket.tech.toLowerCase();
+        return (
+          <TicketForm
+            customer={customer}
+            ticket={ticket}
+            isEditable={isEditable}
+          />
+        );
       }
     }
-
   } catch (e) {
     if (e instanceof Error) {
       Sentry.captureException(e);
