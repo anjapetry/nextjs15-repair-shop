@@ -56,5 +56,27 @@ export const saveCustomerAction = actionClient
           message: `Customer ID #${result[0].insertId} created successfully`,
         };
       }
+
+      // Existing customer
+      const result = await db
+        .update(customers)
+        .set({
+          firstName: customer.firstName,
+          lastName: customer.lastName,
+          email: customer.email,
+          phone: customer.phone,
+          address1: customer.address1,
+          address2: customer.address2?.trim() ?? null,
+          city: customer.city,
+          state: customer.state,
+          zip: customer.zip,
+          notes: customer.notes?.trim() ?? null,
+        })
+        .where(eq(customers.id, customer.id!))
+        .returning({ insertId: customers.id });
+
+      return {
+        message: `Customer ID #${result[0].insertId} updated successfully`,
+      };
     },
   );
