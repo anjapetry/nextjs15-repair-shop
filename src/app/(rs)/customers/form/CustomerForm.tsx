@@ -23,6 +23,7 @@ import {
 
 import { useAction } from "next-safe-action/hooks";
 import { saveCustomerAction } from "@/app/actions/saveCustomerAction";
+import { useToast } from "@/hooks/use-toast";
 
 type Props = {
   customer?: selectCustomerSchemaType;
@@ -33,6 +34,8 @@ export default function CustomerForm({ customer }: Props) {
   const isManager = !isLoading && getPermission("manager")?.isGranted;
   // const permObj = getPermissions(); // permission options
   // const isAuthorized = !isLoading && permObj.permissions.some(perm => perm === 'manager' || perm === 'admin');
+
+  const { toast } = useToast();
 
   const defaultValues: insertCustomerSchemaType = {
     id: customer?.id || 0,
@@ -63,14 +66,25 @@ export default function CustomerForm({ customer }: Props) {
   } = useAction(saveCustomerAction, {
     onSuccess({ data }) {
       // toast user
+      toast({
+        variant: "default",
+        title: "Success! 🎉",
+        description: data?.message,
+      });
     },
     onError({ error }) {
       // toast user
+      toast({
+        variant: "destructive",
+        title: "Error! 😕",
+        description: "Save Failed.",
+      });
     },
   });
 
   async function submitForm(data: insertCustomerSchemaType) {
-    console.log(data);
+    // console.log(data);
+    executeSave(data);
   }
 
   return (
