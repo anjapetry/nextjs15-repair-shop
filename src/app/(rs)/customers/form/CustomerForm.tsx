@@ -10,6 +10,7 @@ import { InputWithLabel } from "@/components/inputs/InputWithLabel";
 import { SelectWithLabel } from "@/components/inputs/SelectWithLabel";
 import { TextAreaWithLabel } from "@/components/inputs/TextAreaWithLabel";
 import { CheckboxWithLabel } from "@/components/inputs/CheckboxWithLabel";
+import { DisplayServerActionResponse } from "@/components/DisplayServerActionResponse";
 
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
@@ -90,6 +91,7 @@ export default function CustomerForm({ customer }: Props) {
 
   return (
     <div className="flex flex-col gap-1 sm:px-8">
+      <DisplayServerActionResponse result={saveResult} />
       <div>
         <h2 className="text-2xl font-bold">
           {customer?.id ? "Edit" : "New"} Customer{" "}
