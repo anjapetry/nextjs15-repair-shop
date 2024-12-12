@@ -24,6 +24,7 @@ import {
 import { useAction } from "next-safe-action/hooks";
 import { saveCustomerAction } from "@/app/actions/saveCustomerAction";
 import { useToast } from "@/hooks/use-toast";
+import { LoaderCircle } from "lucide-react";
 
 type Props = {
   customer?: selectCustomerSchemaType;
@@ -166,8 +167,16 @@ export default function CustomerForm({ customer }: Props) {
                 variant="default"
                 title="Save"
                 aria-label="Save"
+                disabled={isSaving}
               >
-                Save
+                {isSaving ? (
+                  <>
+                    <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />{" "}
+                    Saving...
+                  </>
+                ) : (
+                  "Save"
+                )}
               </Button>
 
               <Button
@@ -177,7 +186,10 @@ export default function CustomerForm({ customer }: Props) {
                 variant="destructive"
                 title="Reset"
                 aria-label="Reset"
-                onClick={() => form.reset(defaultValues)}
+                onClick={() => {
+                  form.reset(defaultValues);
+                  resetSaveAction();
+                }}
               >
                 Reset
               </Button>
