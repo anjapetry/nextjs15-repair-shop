@@ -33,6 +33,8 @@ export const saveCustomerAction = actionClient
       // New Customer
       if (!isAuth) redirect("/login");
 
+      throw Error("Test Error");
+
       if (customer.id === 0) {
         const result = await db
           .insert(customers)
