@@ -33,7 +33,8 @@ export const saveCustomerAction = actionClient
       // New Customer
       if (!isAuth) redirect("/login");
 
-      throw Error("Test Error");
+      // throw Error("Test Error");
+      // const data = await fetch('https://jsoplaceholder');
 
       if (customer.id === 0) {
         const result = await db
