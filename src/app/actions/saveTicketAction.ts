@@ -14,7 +14,7 @@ import {
 
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
-export const saveTicketsAction = actionClient
+export const saveTicketAction = actionClient
   .metadata({ actionName: "saveTicketAction" })
   .schema(insertTicketSchema, {
     handleValidationErrorsShape: async (ve) =>

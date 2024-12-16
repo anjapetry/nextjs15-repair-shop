@@ -10,7 +10,6 @@ import { InputWithLabel } from "@/components/inputs/InputWithLabel";
 import { SelectWithLabel } from "@/components/inputs/SelectWithLabel";
 import { TextAreaWithLabel } from "@/components/inputs/TextAreaWithLabel";
 import { CheckboxWithLabel } from "@/components/inputs/CheckboxWithLabel";
-import { DisplayServerActionResponse } from "@/components/DisplayServerActionResponse";
 
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
@@ -26,6 +25,7 @@ import { useAction } from "next-safe-action/hooks";
 import { saveCustomerAction } from "@/app/actions/saveCustomerAction";
 import { useToast } from "@/hooks/use-toast";
 import { LoaderCircle } from "lucide-react";
+import { DisplayServerActionResponse } from "@/components/DisplayServerActionResponse";
 
 type Props = {
   customer?: selectCustomerSchemaType;
