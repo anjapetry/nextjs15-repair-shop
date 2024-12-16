@@ -26,9 +26,10 @@ export const saveCustomerAction = actionClient
     }: {
       parsedInput: insertCustomerSchemaType;
     }) => {
-      redirect("/customers");
+      // test redirect
+      // redirect("/customers");
 
-      const { isAuthenticated } = await getKindeServerSession();
+      const { isAuthenticated } = getKindeServerSession();
 
       const isAuth = await isAuthenticated();
 

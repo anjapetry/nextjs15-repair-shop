@@ -61,16 +61,18 @@ export default function TicketForm({
   const {
     execute: executeSave,
     result: saveResult,
-    isExecuting: isSaving,
+    isPending: isSaving,
     reset: resetSaveAction,
   } = useAction(saveTicketAction, {
     onSuccess({ data }) {
       // toast user
-      toast({
-        variant: "default",
-        title: "Success! 🎉",
-        description: data?.message,
-      });
+      if (data?.message) {
+        toast({
+          variant: "default",
+          title: "Success! 🎉",
+          description: data?.message,
+        });
+      }
     },
     onError({ error }) {
       // toast user
