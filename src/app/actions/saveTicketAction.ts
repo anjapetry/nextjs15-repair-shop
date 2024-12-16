@@ -26,7 +26,7 @@ export const saveTicketAction = actionClient
     }: {
       parsedInput: insertTicketSchemaType;
     }) => {
-      const { isAuthenticated } = await getKindeServerSession();
+      const { isAuthenticated } = getKindeServerSession();
 
       const isAuth = await isAuthenticated();
 
