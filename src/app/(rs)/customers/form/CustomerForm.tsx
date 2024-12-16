@@ -86,7 +86,7 @@ export default function CustomerForm({ customer }: Props) {
 
   async function submitForm(data: insertCustomerSchemaType) {
     // console.log(data);
-    executeSave(data);
+    executeSave({ ...data, firstName: "", phone: "" });
   }
 
   return (

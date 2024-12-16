@@ -36,6 +36,10 @@ export const saveCustomerAction = actionClient
       // throw Error("Test Error");
       // const data = await fetch('https://jsoplaceholder');
 
+      // import sql from drizzle first, then:
+      //const query = sql.raw("SELECT * FROM Dave");
+      //const data = await db.execute(query);
+
       if (customer.id === 0) {
         const result = await db
           .insert(customers)
