@@ -20,14 +20,14 @@ export default async function Tickets({
     return (
       <>
         <TicketSearch />
-        <p>{JSON.stringify("placeholder")}</p>
+        <p>{JSON.stringify(results)}</p>
       </>
     );
   }
 
   // query search results
   const results = await getTicketSearchResults(searchText);
- // return results
+  // return results
   return (
     <>
       <TicketSearch />
