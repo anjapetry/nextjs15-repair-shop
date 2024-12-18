@@ -23,6 +23,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.2",
     "@sentry/nextjs": "^8.39.0",
+    "@tanstack/react-table": "^8.20.6",
     "@types/next": "^8.0.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
