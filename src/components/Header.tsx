@@ -32,7 +32,7 @@ export function Header() {
             icon={UsersRound}
             label="Customers Menu"
             choices={[
-              { title: "Customers", href: "/customers" },
+              { title: "Search Customers", href: "/customers" },
               { title: "New Customer", href: "/customers/form" },
             ]}
           />
