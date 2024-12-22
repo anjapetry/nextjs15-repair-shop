@@ -28,10 +28,10 @@ type Props = {
 
 type RowType = TicketSearchResultsType[0];
 
-export default function CustomerTable({ data }: Props) {
+export default function TicketTable({ data }: Props) {
   const router = useRouter();
 
-  const columnHeadersArray: Array<keyof selectCustomerSchemaType> = [
+  const columnHeadersArray: Array<keyof RowType> = [
     "ticketDate",
     "title",
     "tech",
@@ -117,7 +117,7 @@ export default function CustomerTable({ data }: Props) {
               key={row.id}
               className="cursor-pointer hover:bg-border/25 dark:hover:bg-ring/40"
               onClick={() =>
-                router.push(`/customers/form?ticketId=${row.original.id}`)
+                router.push(`/tickets/form?ticketId=${row.original.id}`)
               }
             >
               {row.getVisibleCells().map((cell) => (

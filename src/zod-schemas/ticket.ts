@@ -2,11 +2,11 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { tickets } from "@/db/schema";
 import { z } from "zod";
 
-export const insertTicketSchema = createInsertSchema(tickets, {
+export const insertTicketSchema = createInsertSchema(tickets).extend({
   id: z.union([z.number(), z.literal("(New)")]),
-  title: (schema) => schema.title.min(1, "Title is required"),
-  description: (schema) => schema.description.min(1, "Description is required"),
-  tech: (schema) => schema.tech.email("Invalid email address"),
+  title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+  tech: z.string().email("Invalid email address"),
 });
 
 export const selectTicketSchema = createSelectSchema(tickets);
