@@ -8,8 +8,6 @@ export async function getCustomerSearchResults(searchText: string) {
     .from(customers)
     .where(
       or(
-        ilike(customers.firstName, `%${searchText}%`),
-        ilike(customers.lastName, `%${searchText}%`),
         ilike(customers.email, `%${searchText}%`),
         ilike(customers.phone, `%${searchText}%`),
         ilike(customers.city, `%${searchText}%`),
