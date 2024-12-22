@@ -18,7 +18,7 @@ export default async function Customers({
 
   // measure performance with a span
   const span = Sentry.startInactiveSpan({
-    name: "getCustomerSearchResults-1",
+    name: "getCustomerSearchResults-2",
   });
   // query database
   const results = await getCustomerSearchResults(searchText);
