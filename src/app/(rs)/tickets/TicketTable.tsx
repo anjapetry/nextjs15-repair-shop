@@ -7,6 +7,7 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  getPaginationRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -87,7 +88,13 @@ export default function TicketTable({ data }: Props) {
   const table = useReactTable({
     data,
     columns,
+    initialState: {
+      pagination: {
+        pageSize: 10,
+      },
+    },
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (
@@ -129,6 +136,16 @@ export default function TicketTable({ data }: Props) {
           ))}
         </TableBody>
       </Table>
+      <div className="flex items-center justify-between">
+        <div className="flex basis-1/3 items-center">
+          <p className="whitespace-no-wrap font-bold">
+            {`Page ${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}
+            &nbsp;|&nbsp;
+            {`[${table.getFilteredRowModel().rows.length} ${table.getFilteredRowModel().rows.length !== 1 ? "total results" : "result"}]`}
+          </p>
+          <div className="space-x-1"></div>
+        </div>
+      </div>
     </div>
   );
 }
