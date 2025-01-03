@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@types/node": "^22",
-    "@types/react": "npm:types-react@19.0.0-alpha.3",
+    "@types/react": "npm:types-react@^19.0.0-alpha.3",
     "@types/react-dom": "npm:types-react-dom@19.0.0-alpha.3",
     "eslint": "^9",
     "eslint-config-next": "15.1.3",

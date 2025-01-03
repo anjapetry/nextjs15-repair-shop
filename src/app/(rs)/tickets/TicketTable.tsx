@@ -1,6 +1,7 @@
 "use client";
 
 import type { TicketSearchResultsType } from "@/lib/queries/getTicketSearchResults";
+import { Button } from "@/components/ui/button";
 
 import {
   createColumnHelper,
@@ -20,7 +21,6 @@ import {
 } from "@/components/ui/table";
 
 import { CircleCheckIcon, CircleXIcon } from "lucide-react";
-
 import { useRouter } from "next/navigation";
 
 type Props = {
@@ -98,7 +98,8 @@ export default function TicketTable({ data }: Props) {
   });
 
   return (
-    <div className="mt-6 overflow-hidden rounded-lg border border-border">
+    <div className="mt-6 flex flex-col gap-4">
+    <div className="overflow-hidden rounded-lg border border-border">
       <Table className="border">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -136,6 +137,7 @@ export default function TicketTable({ data }: Props) {
           ))}
         </TableBody>
       </Table>
+      </div>
       <div className="flex items-center justify-between">
         <div className="flex basis-1/3 items-center">
           <p className="whitespace-no-wrap font-bold">
@@ -143,7 +145,22 @@ export default function TicketTable({ data }: Props) {
             &nbsp;|&nbsp;
             {`[${table.getFilteredRowModel().rows.length} ${table.getFilteredRowModel().rows.length !== 1 ? "total results" : "result"}]`}
           </p>
-          <div className="space-x-1"></div>
+          <div className="space-x-1">
+            <Button
+              variant="outline"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              Next
+            </Button>
+          </div>
         </div>
       </div>
     </div>
