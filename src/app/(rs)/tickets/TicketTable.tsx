@@ -166,6 +166,9 @@ export default function TicketTable({ data }: Props) {
           </p>
         </div>
         <div className="space-x-1">
+          <Button variant="outline" onClick={() => table.resetColumnFilters()}>
+            Reset Filters
+          </Button>
           <Button
             variant="outline"
             onClick={() => table.previousPage()}
