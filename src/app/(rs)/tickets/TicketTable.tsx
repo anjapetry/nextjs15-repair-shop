@@ -208,50 +208,57 @@ export default function TicketTable({ data }: Props) {
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-between">
-        <div className="flex basis-1/3 items-center">
+      <div className="flex flex-wrap items-center justify-between gap-1">
+        <div>
           <p className="whitespace-no-wrap font-bold">
             {`Page ${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}
             &nbsp;|&nbsp;
             {`[${table.getFilteredRowModel().rows.length} ${table.getFilteredRowModel().rows.length !== 1 ? "total results" : "result"}]`}
           </p>
         </div>
-        <div className="space-x-1">
-          <Button variant="outline" onClick={() => router.refresh()}>
-            Refresh Data
-          </Button>
-          <Button variant="outline" onClick={() => table.resetSorting()}>
-            Reset Sorting
-          </Button>
-          <Button variant="outline" onClick={() => table.resetColumnFilters()}>
-            Reset Filters
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => {
-              const newIndex = table.getState().pagination.pageIndex - 1;
-              table.setPageIndex(newIndex);
-              const params = new URLSearchParams(searchParams.toString());
-              params.set("page", (newIndex + 1).toString());
-              router.replace(`?${params.toString()}`, { scroll: false });
-            }}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => {
-              const newIndex = table.getState().pagination.pageIndex + 1;
-              table.setPageIndex(newIndex);
-              const params = new URLSearchParams(searchParams.toString());
-              params.set("page", (newIndex + 1).toString());
-              router.replace(`?${params.toString()}`, { scroll: false });
-            }}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
+        <div className="flex flex-row gap-1">
+          <div className="flex flex-row gap-1">
+            <Button variant="outline" onClick={() => router.refresh()}>
+              Refresh Data
+            </Button>
+            <Button variant="outline" onClick={() => table.resetSorting()}>
+              Reset Sorting
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => table.resetColumnFilters()}
+            >
+              Reset Filters
+            </Button>
+          </div>
+          <div className="flex flex-row gap-1">
+            <Button
+              variant="outline"
+              onClick={() => {
+                const newIndex = table.getState().pagination.pageIndex - 1;
+                table.setPageIndex(newIndex);
+                const params = new URLSearchParams(searchParams.toString());
+                params.set("page", (newIndex + 1).toString());
+                router.replace(`?${params.toString()}`, { scroll: false });
+              }}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                const newIndex = table.getState().pagination.pageIndex + 1;
+                table.setPageIndex(newIndex);
+                const params = new URLSearchParams(searchParams.toString());
+                params.set("page", (newIndex + 1).toString());
+                router.replace(`?${params.toString()}`, { scroll: false });
+              }}
+              disabled={!table.getCanNextPage()}
+            >
+              Next
+            </Button>
+          </div>
         </div>
       </div>
     </div>
