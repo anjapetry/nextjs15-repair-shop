@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { usePolling } from "@/hooks/usePolling";
 import type { TicketSearchResultsType } from "@/lib/queries/getTicketSearchResults";
@@ -57,7 +57,12 @@ export default function TicketTable({ data }: Props) {
     },
   ]);
 
-  usePolling(5000, searchParams.get("searchText"));
+  usePolling(10000, searchParams.get("searchText"));
+
+  const pageIndex = useMemo(() => {
+    const page = searchParams.get("page");
+    return page ? parseInt(page) - 1 : 0;
+  }, [searchParams.get("page")]);
 
   const columnHeadersArray: Array<keyof RowType> = [
     "ticketDate",
@@ -142,12 +147,12 @@ export default function TicketTable({ data }: Props) {
     state: {
       sorting,
       columnFilters,
-    },
-    initialState: {
       pagination: {
+        pageIndex,
         pageSize: 10,
       },
     },
+
     onColumnFiltersChange: setColumnFilters,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
@@ -212,6 +217,9 @@ export default function TicketTable({ data }: Props) {
           </p>
         </div>
         <div className="space-x-1">
+          <Button variant="outline" onClick={() => router.refresh()}>
+            Refresh Data
+          </Button>
           <Button variant="outline" onClick={() => table.resetSorting()}>
             Reset Sorting
           </Button>
@@ -220,14 +228,26 @@ export default function TicketTable({ data }: Props) {
           </Button>
           <Button
             variant="outline"
-            onClick={() => table.previousPage()}
+            onClick={() => {
+              const newIndex = table.getState().pagination.pageIndex - 1;
+              table.setPageIndex(newIndex);
+              const params = new URLSearchParams(searchParams.toString());
+              params.set("page", (newIndex + 1).toString());
+              router.replace(`?${params.toString()}`, { scroll: false });
+            }}
             disabled={!table.getCanPreviousPage()}
           >
             Previous
           </Button>
           <Button
             variant="outline"
-            onClick={() => table.nextPage()}
+            onClick={() => {
+              const newIndex = table.getState().pagination.pageIndex + 1;
+              table.setPageIndex(newIndex);
+              const params = new URLSearchParams(searchParams.toString());
+              params.set("page", (newIndex + 1).toString());
+              router.replace(`?${params.toString()}`, { scroll: false });
+            }}
             disabled={!table.getCanNextPage()}
           >
             Next
