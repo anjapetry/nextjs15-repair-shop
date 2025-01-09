@@ -1,5 +1,7 @@
 import { redirect } from "next/navigation";
+import Loading from "@/app/loading";
 
 export default function Home() {
-  redirect("/tickets");
+  return <Loading />;
+  //redirect("/tickets");
 }
