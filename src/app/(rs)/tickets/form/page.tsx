@@ -120,7 +120,10 @@ export default async function TicketFormPage({
         const { users } = await Users.getUsers();
 
         const techs = users
-          ? users.map((user) => ({ id: user.email!, description: user.email! }))
+          ? users.map((user) => ({
+              id: user.email?.toLowerCase()!,
+              description: user.email?.toLowerCase()!,
+            }))
           : [];
         return <TicketForm customer={customer} ticket={ticket} techs={techs} />;
       } else {
