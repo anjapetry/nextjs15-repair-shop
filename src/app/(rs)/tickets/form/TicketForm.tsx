@@ -12,10 +12,13 @@ import { CheckboxWithLabel } from "@/components/inputs/CheckboxWithLabel";
 
 import {
   insertTicketSchema,
-  type insertTicketSchemaType,
-  type selectTicketSchemaType,
+  type InsertTicketSchema,
+  type SelectTicketSchema,
 } from "@/zod-schemas/ticket";
-import { selectCustomerSchemaType } from "@/zod-schemas/customer";
+import {
+  type InsertCustomerSchema,
+  type SelectCustomerSchema,
+} from "@/zod-schemas/customer";
 
 import { useAction } from "next-safe-action/hooks";
 import { saveTicketAction } from "@/app/actions/saveTicketAction";
@@ -24,13 +27,14 @@ import { LoaderCircle } from "lucide-react";
 import { DisplayServerActionResponse } from "@/components/DisplayServerActionResponse";
 
 type Props = {
-  customer: selectCustomerSchemaType;
-  ticket?: selectTicketSchemaType;
+  customer: SelectCustomerSchema;
+  ticket?: SelectTicketSchema;
   techs?: {
     id: string;
     description: string;
   }[];
   isEditable?: boolean;
+  isManager?: boolean | undefined;
 };
 
 export default function TicketForm({
@@ -38,12 +42,11 @@ export default function TicketForm({
   ticket,
   techs,
   isEditable = true,
+  isManager = false,
 }: Props) {
-  const isManager = Array.isArray(techs);
-
   const { toast } = useToast();
 
-  const defaultValues: insertTicketSchemaType = {
+  const defaultValues: InsertTicketSchema = {
     id: ticket?.id ?? "(New)",
     customerId: ticket?.customerId ?? customer.id,
     title: ticket?.title ?? "",
@@ -52,7 +55,7 @@ export default function TicketForm({
     tech: ticket?.tech.toLowerCase() ?? "new-ticket@example.com",
   };
 
-  const form = useForm<insertTicketSchemaType>({
+  const form = useForm<InsertTicketSchema>({
     mode: "onBlur",
     resolver: zodResolver(insertTicketSchema),
     defaultValues,
@@ -65,27 +68,24 @@ export default function TicketForm({
     reset: resetSaveAction,
   } = useAction(saveTicketAction, {
     onSuccess({ data }) {
-      // toast user
       if (data?.message) {
         toast({
           variant: "default",
           title: "Success! 🎉",
-          description: data?.message,
+          description: data.message,
         });
       }
     },
     onError({ error }) {
-      // toast user
       toast({
         variant: "destructive",
-        title: "Error! 😕",
-        description: "Save Failed.",
+        title: "Error",
+        description: "Save Failed",
       });
     },
   });
 
-  async function submitForm(data: insertTicketSchemaType) {
-    //console.log(data);
+  async function submitForm(data: InsertTicketSchema) {
     executeSave(data);
   }
 
@@ -107,14 +107,14 @@ export default function TicketForm({
           className="flex flex-col gap-4 md:flex-row md:gap-8"
         >
           <div className="flex w-full max-w-xs flex-col gap-4">
-            <InputWithLabel<insertTicketSchemaType>
+            <InputWithLabel<InsertTicketSchema>
               fieldTitle="Title"
               nameInSchema="title"
               disabled={!isEditable}
             />
 
-            {isManager ? (
-              <SelectWithLabel<insertTicketSchemaType>
+            {isManager && techs ? (
+              <SelectWithLabel<InsertTicketSchema>
                 fieldTitle="Tech ID"
                 nameInSchema="tech"
                 data={[
@@ -126,7 +126,7 @@ export default function TicketForm({
                 ]}
               />
             ) : (
-              <InputWithLabel<insertTicketSchemaType>
+              <InputWithLabel<InsertTicketSchema>
                 fieldTitle="Tech"
                 nameInSchema="tech"
                 disabled={true}
@@ -134,7 +134,7 @@ export default function TicketForm({
             )}
 
             {ticket?.id ? (
-              <CheckboxWithLabel<insertTicketSchemaType>
+              <CheckboxWithLabel<InsertTicketSchema>
                 fieldTitle="Completed"
                 nameInSchema="completed"
                 message="Yes"
@@ -160,10 +160,10 @@ export default function TicketForm({
           </div>
 
           <div className="flex w-full max-w-xs flex-col gap-4">
-            <TextAreaWithLabel<insertTicketSchemaType>
+            <TextAreaWithLabel<InsertTicketSchema>
               fieldTitle="Description"
               nameInSchema="description"
-              className="mb-6 h-80"
+              className="h-96"
               disabled={!isEditable}
             />
 
@@ -178,8 +178,7 @@ export default function TicketForm({
                 >
                   {isSaving ? (
                     <>
-                      <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />{" "}
-                      Saving...
+                      <LoaderCircle className="animate-spin" /> Saving
                     </>
                   ) : (
                     "Save"
