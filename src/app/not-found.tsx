@@ -23,7 +23,7 @@ export default function NotFound() {
         />
       </div>
       <Link href="/tickets" className="text-center hover:underline">
-        <h3 className="text-2xl font-semibold">Go back to the home page</h3>
+        <h3 className="text-xl font-semibold">Go back to the home page</h3>
       </Link>
     </div>
   );
