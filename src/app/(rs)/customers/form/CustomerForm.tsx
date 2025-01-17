@@ -11,14 +11,12 @@ import { SelectWithLabel } from "@/components/inputs/SelectWithLabel";
 import { TextAreaWithLabel } from "@/components/inputs/TextAreaWithLabel";
 import { CheckboxWithLabel } from "@/components/inputs/CheckboxWithLabel";
 
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-
 import { StatesArray } from "@/constants/StateArray";
 
 import {
   insertCustomerSchema,
-  type insertCustomerSchemaType,
-  type selectCustomerSchemaType,
+  type InsertCustomerSchema,
+  type SelectCustomerSchema,
 } from "@/zod-schemas/customer";
 
 import { useAction } from "next-safe-action/hooks";
@@ -28,18 +26,14 @@ import { LoaderCircle } from "lucide-react";
 import { DisplayServerActionResponse } from "@/components/DisplayServerActionResponse";
 
 type Props = {
-  customer?: selectCustomerSchemaType;
+  customer?: SelectCustomerSchema;
+  isManager?: boolean | undefined;
 };
 
-export default function CustomerForm({ customer }: Props) {
-  const { getPermission, isLoading } = useKindeBrowserClient();
-  const isManager = !isLoading && getPermission("manager")?.isGranted;
-  // const permObj = getPermissions(); // permission options
-  // const isAuthorized = !isLoading && permObj.permissions.some(perm => perm === 'manager' || perm === 'admin');
-
+export default function CustomerForm({ customer, isManager = false }: Props) {
   const { toast } = useToast();
 
-  const defaultValues: insertCustomerSchemaType = {
+  const defaultValues: InsertCustomerSchema = {
     id: customer?.id || 0,
     firstName: customer?.firstName || "",
     lastName: customer?.lastName || "",
@@ -54,7 +48,7 @@ export default function CustomerForm({ customer }: Props) {
     active: customer?.active ?? true,
   };
 
-  const form = useForm<insertCustomerSchemaType>({
+  const form = useForm<InsertCustomerSchema>({
     mode: "onBlur", //
     resolver: zodResolver(insertCustomerSchema),
     defaultValues,
@@ -86,7 +80,7 @@ export default function CustomerForm({ customer }: Props) {
     },
   });
 
-  async function submitForm(data: insertCustomerSchemaType) {
+  async function submitForm(data: InsertCustomerSchema) {
     // console.log(data);
     executeSave({ ...data, firstName: "", phone: "" });
   }
@@ -106,27 +100,27 @@ export default function CustomerForm({ customer }: Props) {
           className="flex flex-col gap-4 md:flex-row md:gap-8"
         >
           <div className="flex w-full max-w-xs flex-col gap-4 pt-2">
-            <InputWithLabel<insertCustomerSchemaType>
+            <InputWithLabel<InsertCustomerSchema>
               fieldTitle="First Name"
               nameInSchema="firstName"
             />
-            <InputWithLabel<insertCustomerSchemaType>
+            <InputWithLabel<InsertCustomerSchema>
               fieldTitle="Last Name"
               nameInSchema="lastName"
             />
-            <InputWithLabel<insertCustomerSchemaType>
+            <InputWithLabel<InsertCustomerSchema>
               fieldTitle="Address 1"
               nameInSchema="address1"
             />
-            <InputWithLabel<insertCustomerSchemaType>
+            <InputWithLabel<InsertCustomerSchema>
               fieldTitle="Address 2"
               nameInSchema="address2"
             />
-            <InputWithLabel<insertCustomerSchemaType>
+            <InputWithLabel<InsertCustomerSchema>
               fieldTitle="City"
               nameInSchema="city"
             />
-            <SelectWithLabel<insertCustomerSchemaType>
+            <SelectWithLabel<InsertCustomerSchema>
               fieldTitle="State"
               nameInSchema="state"
               data={StatesArray}
@@ -134,29 +128,27 @@ export default function CustomerForm({ customer }: Props) {
           </div>
 
           <div className="flex w-full max-w-xs flex-col gap-4 pt-2">
-            <InputWithLabel<insertCustomerSchemaType>
+            <InputWithLabel<InsertCustomerSchema>
               fieldTitle="Zip Code"
               nameInSchema="zip"
             />
-            <InputWithLabel<insertCustomerSchemaType>
+            <InputWithLabel<InsertCustomerSchema>
               fieldTitle="Email"
               nameInSchema="email"
             />
-            <InputWithLabel<insertCustomerSchemaType>
+            <InputWithLabel<InsertCustomerSchema>
               fieldTitle="Phone"
               nameInSchema="phone"
             />
 
-            <TextAreaWithLabel<insertCustomerSchemaType>
+            <TextAreaWithLabel<InsertCustomerSchema>
               fieldTitle="Notes"
               nameInSchema="notes"
               className="mb-6 h-40"
             />
 
-            {isLoading ? (
-              <p>Loading...</p>
-            ) : isManager && customer?.id ? (
-              <CheckboxWithLabel<insertCustomerSchemaType>
+            {isManager && customer?.id ? (
+              <CheckboxWithLabel<InsertCustomerSchema>
                 fieldTitle="Active"
                 nameInSchema="active"
                 message="Yes"
