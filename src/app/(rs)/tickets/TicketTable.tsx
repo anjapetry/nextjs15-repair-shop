@@ -241,8 +241,8 @@ export default function TicketTable({ data }: Props) {
       <div className="flex flex-wrap items-center justify-between gap-1">
         <div>
           <p className="whitespace-no-wrap font-bold">
-            {`Page ${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}
-            &nbsp;|&nbsp;
+            {`Page ${table.getState().pagination.pageIndex + 1} of ${Math.max(1, table.getPageCount())}`}
+            &nbsp;&nbsp;
             {`[${table.getFilteredRowModel().rows.length} ${table.getFilteredRowModel().rows.length !== 1 ? "total results" : "result"}]`}
           </p>
         </div>
