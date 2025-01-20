@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { usePolling } from "@/hooks/usePolling";
 import type { TicketSearchResultsType } from "@/lib/queries/getTicketSearchResults";
@@ -171,6 +171,17 @@ export default function TicketTable({ data }: Props) {
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getSortedRowModel: getSortedRowModel(),
   });
+
+  useEffect(() => {
+    const currentPageIndex = table.getState().pagination.pageIndex;
+    const pageCount = table.getPageCount();
+
+    if (pageCount <= currentPageIndex && currentPageIndex > 0) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("page", "1");
+      router.replace(`?${params.toString()}`, { scroll: false });
+    }
+  }, [table.getState().columnFilters]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="mt-6 flex flex-col gap-4">
