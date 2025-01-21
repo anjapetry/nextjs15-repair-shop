@@ -1,6 +1,5 @@
 import { db } from "@/db";
 import { tickets, customers } from "@/db/schema";
-import exp from "constants";
 import { eq, ilike, or, sql, asc } from "drizzle-orm";
 
 export async function getTicketSearchResults(searchText: string) {
@@ -34,4 +33,6 @@ export async function getTicketSearchResults(searchText: string) {
   return results;
 }
 
-export type TicketSearchResultsType = Awaited<ReturnType<typeof getTicketSearchResults>>;
+export type TicketSearchResultsType = Awaited<
+  ReturnType<typeof getTicketSearchResults>
+>;
