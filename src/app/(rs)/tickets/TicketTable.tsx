@@ -49,7 +49,6 @@ export default function TicketTable({ data }: Props) {
   const searchParams = useSearchParams();
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-
   const [sorting, setSorting] = useState<SortingState>([
     {
       id: "ticketDate",
@@ -57,7 +56,7 @@ export default function TicketTable({ data }: Props) {
     },
   ]);
 
-  usePolling(300000, searchParams.get("searchText"));
+  usePolling(searchParams.get("searchText"));
 
   const pageIndex = useMemo(() => {
     const page = searchParams.get("page");
