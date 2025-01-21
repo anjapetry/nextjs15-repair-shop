@@ -15,10 +15,7 @@ import {
   type InsertTicketSchema,
   type SelectTicketSchema,
 } from "@/zod-schemas/ticket";
-import {
-  type InsertCustomerSchema,
-  type SelectCustomerSchema,
-} from "@/zod-schemas/customer";
+import { type SelectCustomerSchema } from "@/zod-schemas/customer";
 
 import { useAction } from "next-safe-action/hooks";
 import { saveTicketAction } from "@/app/actions/saveTicketAction";
@@ -76,7 +73,7 @@ export default function TicketForm({
         });
       }
     },
-    onError({ error }) {
+    onError() {
       toast({
         variant: "destructive",
         title: "Error",
