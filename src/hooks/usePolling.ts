@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-export function usePolling(ms: number = 60000, searchParam: string | null) {
+export function usePolling(searchParam: string | null, ms: number = 60000) {
   const router = useRouter();
 
   useEffect(() => {
@@ -14,5 +14,5 @@ export function usePolling(ms: number = 60000, searchParam: string | null) {
     }, ms);
 
     return () => clearInterval(intervalId);
-  }, [ms, searchParam]); // eslint-disable-line react-hooks/exhaustive-deps //
+  }, [searchParam, ms]); // eslint-disable-line react-hooks/exhaustive-deps
 }
