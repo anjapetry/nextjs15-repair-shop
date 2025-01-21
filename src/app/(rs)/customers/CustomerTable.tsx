@@ -32,7 +32,6 @@ import {
 
 import { MoreHorizontal, TableOfContents } from "lucide-react";
 
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 type Props = {
@@ -40,8 +39,6 @@ type Props = {
 };
 
 export default function CustomerTable({ data }: Props) {
-  const router = useRouter();
-
   const columnHeadersArray: Array<keyof SelectCustomerSchema> = [
     "firstName",
     "lastName",
@@ -141,9 +138,6 @@ export default function CustomerTable({ data }: Props) {
             <TableRow
               key={row.id}
               className="cursor-pointer hover:bg-border/25 dark:hover:bg-ring/40"
-              onClick={() =>
-                router.push(`/customers/form?customerId=${row.original.id}`)
-              }
             >
               {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id} className="border">
