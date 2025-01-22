@@ -26,5 +26,5 @@ export default async function Customers({
         <p className="mt-4">No results found</p>
       )}
     </>
-  );test span from 
+  );
 }
