@@ -9,7 +9,7 @@ import { customers } from "@/db/schema";
 import { actionClient } from "@/lib/safe-action";
 import {
   insertCustomerSchema,
-  type insertCustomerSchemaType,
+  type InsertCustomerSchema,
 } from "@/zod-schemas/customer";
 
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
@@ -24,7 +24,7 @@ export const saveCustomerAction = actionClient
     async ({
       parsedInput: customer,
     }: {
-      parsedInput: insertCustomerSchemaType;
+      parsedInput: InsertCustomerSchema;
     }) => {
       // test redirect
       // redirect("/customers");
