@@ -1,9 +1,11 @@
 import CustomerSearch from "@/app/(rs)/customers/CustomerSearch";
 import { getCustomerSearchResults } from "@/lib/queries/getCustomerSearchResults";
 import CustomerTable from "@/app/(rs)/customers/CustomerTable";
+import { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Customer Search",
+  description: "Add or edit customer information",
 };
 
 export default async function Customers({
