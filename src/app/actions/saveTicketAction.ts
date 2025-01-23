@@ -9,7 +9,7 @@ import { tickets } from "@/db/schema";
 import { actionClient } from "@/lib/safe-action";
 import {
   insertTicketSchema,
-  type insertTicketSchemaType,
+  type InsertTicketSchema,
 } from "@/zod-schemas/ticket";
 
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
@@ -24,7 +24,7 @@ export const saveTicketAction = actionClient
     async ({
       parsedInput: ticket,
     }: {
-      parsedInput: insertTicketSchemaType;
+      parsedInput: InsertTicketSchema;
     }) => {
       const { isAuthenticated } = getKindeServerSession();
 
