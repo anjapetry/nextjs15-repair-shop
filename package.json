@@ -23,6 +23,7 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-toast": "^1.2.15",
     "@sentry/nextjs": "^10.5.0",
+    "@tailwindcss/postcss": "^4.1.12",
     "@tanstack/react-table": "^8.21.3",
     "autoprefixer": "^10.4.21",
     "class-variance-authority": "^0.7.1",
