@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="bg-black bg-home-img bg-cover bg-center">
+    <div className="bg-home-img bg-black bg-cover bg-center">
       <main className="mx-auto flex h-dvh max-w-5xl flex-col justify-center text-center">
         <div className="w-4/5sm:max-w-96 mx-auto flex flex-col gap-6 rounded-xl bg-black/90 p-12 text-white sm:text-2xl">
           <h1 className="font-[family-name:var(--font-geist-sans)] text-4xl font-bold">
