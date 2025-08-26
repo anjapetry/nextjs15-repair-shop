@@ -142,7 +142,7 @@ export default async function TicketFormPage({
         );
       } else {
         const isEditable =
-          user.email?.toLowerCase() === ticket.tech.toLowerCase();
+          (user?.email ?? "").toLowerCase() === ticket.tech.toLowerCase();
 
         return (
           <TicketForm
