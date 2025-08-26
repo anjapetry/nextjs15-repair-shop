@@ -20,5 +20,8 @@ export default withSentryConfig(nextConfig, {
   authToken: sentryAuthToken,
 
   silent: false, // Can be used to suppress logs
+  sourcemaps: {
+    deleteSourcemapsAfterUpload: true,
+  },
   disableLogger: true,
 });
