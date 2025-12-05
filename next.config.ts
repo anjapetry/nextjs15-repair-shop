@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 import { withSentryConfig } from "@sentry/nextjs";
 
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    // include quality 90 (and others if desired). Next.js 16 will require configured qualities.
+    qualities: [90],
+  },
+};
 
 // Make sure adding Sentry options is the last code to run before exporting
 // When DISABLE_SENTRY_SOURCEMAP_UPLOAD=1 we avoid passing an auth token so
